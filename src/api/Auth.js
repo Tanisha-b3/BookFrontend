@@ -1,7 +1,7 @@
 // client/src/api/auth.js
 import axios from 'axios';
 
-const API_BASE_URL = 'https://user-backend-ten.vercel.app/api';
+const API_BASE_URL = 'https://user-backend-eta.vercel.app/api';
 
 // Create axios instance
 const api = axios.create({
