@@ -1,7 +1,7 @@
 // client/src/pages/Dashboard.jsx
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
-import { tasksAPI } from "../api/task.js"
+import { tasksAPI } from "../api/task.js";
 import TaskList from "../components/TaskList";
 import SearchFilter from "../components/SearchFilter";
 import Pagination from "../components/Pagination";
@@ -31,16 +31,7 @@ import {
 } from "../../components/ui/sheet";
 
 // Icons
-import { 
-  LogOut, 
-  Plus, 
-  User, 
-  Settings, 
-  Menu, 
-  Bell,
-  Filter,
-  Search
-} from "lucide-react";
+import { LogOut, Plus, User, Menu, Filter, Search } from "lucide-react";
 
 function Dashboard() {
   const { user, logout } = useAuth();
@@ -63,21 +54,14 @@ function Dashboard() {
   const fetchTasks = async () => {
     try {
       setLoading(true);
-      const response = await tasksAPI.getTasks(
-        currentPage,
-        limit,
-        searchTerm,
-        statusFilter
-      );
+      const response = await tasksAPI.getTasks(currentPage, limit, searchTerm, statusFilter);
 
       if (response.success) {
         setTasks(response.tasks);
         setTotalPages(response.totalPages);
         setTotalTasks(response.totalTasks || response.tasks.length);
-      } else {
-        setError("Failed to fetch tasks");
-      }
-    } catch (err) {
+      } else setError("Failed to fetch tasks");
+    } catch {
       setError("An error occurred while fetching tasks");
     } finally {
       setLoading(false);
@@ -90,53 +74,37 @@ function Dashboard() {
         const response = await tasksAPI.deleteTask(id);
         if (response.success) {
           setTasks(tasks.filter((task) => task._id !== id));
-          // Refresh tasks to update pagination
           fetchTasks();
-        } else {
-          setError("Failed to delete task");
-        }
-      } catch (err) {
+        } else setError("Failed to delete task");
+      } catch {
         setError("An error occurred while deleting the task");
       }
     }
   };
 
-  const handleTaskUpdate = () => {
-    // Refresh tasks after update
-    fetchTasks();
-  };
+  const handleTaskUpdate = () => fetchTasks();
 
-  const getTaskStats = () => {
-    const total = tasks.length;
-    const completed = tasks.filter(task => task.status === 'done').length;
-    const pending = total - completed;
-    
-    return { total, completed, pending };
+  const stats = {
+    total: tasks.length,
+    completed: tasks.filter((task) => task.status === "done").length,
+    pending: tasks.filter((task) => task.status !== "done").length,
   };
-
-  const stats = getTaskStats();
 
   if (loading && tasks.length === 0) {
     return (
       <div className="container mx-auto px-4 py-8 space-y-6">
-        <div className="flex justify-between items-center">
-          <Skeleton className="h-10 w-48" />
-          <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <Skeleton className="h-10 w-full sm:w-48" />
+          <div className="flex gap-2 flex-wrap">
             <Skeleton className="h-10 w-32" />
             <Skeleton className="h-10 w-32" />
           </div>
         </div>
-        
-        <div className="grid gap-4 md:grid-cols-3">
-          {[1, 2, 3].map((i) => (
-            <Skeleton key={i} className="h-32 rounded-lg" />
-          ))}
+        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+          {[1, 2, 3].map((i) => <Skeleton key={i} className="h-32 rounded-lg" />)}
         </div>
-        
         <div className="space-y-4">
-          {[1, 2, 3, 4, 5].map((i) => (
-            <Skeleton key={i} className="h-20 rounded-lg" />
-          ))}
+          {[1, 2, 3, 4, 5].map((i) => <Skeleton key={i} className="h-20 rounded-lg" />)}
         </div>
       </div>
     );
@@ -149,13 +117,10 @@ function Dashboard() {
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Task Dashboard</h1>
-            <p className="text-muted-foreground">
-              Manage your tasks efficiently
-            </p>
+            <p className="text-muted-foreground">Manage your tasks efficiently</p>
           </div>
-          
-          <div className="flex items-center gap-3">
-            {/* Mobile menu */}
+          <div className="flex items-center gap-3 flex-wrap">
+            {/* Mobile Filters */}
             <Sheet open={mobileFiltersOpen} onOpenChange={setMobileFiltersOpen}>
               <SheetTrigger asChild>
                 <Button variant="outline" size="icon" className="lg:hidden">
@@ -165,9 +130,7 @@ function Dashboard() {
               <SheetContent side="right" className="w-80">
                 <SheetHeader>
                   <SheetTitle>Filters</SheetTitle>
-                  <SheetDescription>
-                    Filter your tasks by status
-                  </SheetDescription>
+                  <SheetDescription>Filter your tasks by status</SheetDescription>
                 </SheetHeader>
                 <div className="py-6">
                   <SearchFilter
@@ -175,16 +138,13 @@ function Dashboard() {
                     onSearchChange={setSearchTerm}
                     statusFilter={statusFilter}
                     onStatusFilterChange={setStatusFilter}
-                    isMobile
                   />
                 </div>
               </SheetContent>
             </Sheet>
 
-            <Badge variant="secondary" className="hidden sm:flex">
-              {user?.email}
-            </Badge>
-            
+            <Badge variant="secondary" className="hidden sm:flex">{user?.email}</Badge>
+
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="icon">
@@ -195,134 +155,103 @@ function Dashboard() {
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={logout}>
-                  <LogOut className="mr-2 h-4 w-4" />
-                  <span>Logout</span>
+                  <LogOut className="mr-2 h-4 w-4" /> Logout
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <Button onClick={() => navigate("/tasks/new")}>
-              <Plus className="mr-2 h-4 w-4" />
-              New Task
+            <Button onClick={() => navigate("/tasks/new")} className="flex items-center gap-2">
+              <Plus className="h-4 w-4" /> New Task
             </Button>
           </div>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardHeader className="flex justify-between pb-2">
               <CardTitle className="text-sm font-medium">Total Tasks</CardTitle>
-              <div className="h-4 w-4 text-muted-foreground">
-                <Filter className="h-4 w-4" />
-              </div>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{totalTasks}</div>
-              <p className="text-xs text-muted-foreground">
-                Across all statuses
-              </p>
+              <p className="text-xs text-muted-foreground">Across all statuses</p>
             </CardContent>
           </Card>
 
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardHeader className="flex justify-between pb-2">
               <CardTitle className="text-sm font-medium">Completed</CardTitle>
-              <div className="h-4 w-4 text-muted-foreground">
-                <Badge variant="success" className="h-4 w-4 p-0">
-                  ✓
-                </Badge>
-              </div>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{stats.completed}</div>
               <p className="text-xs text-muted-foreground">
-                {totalTasks > 0 ? Math.round((stats.completed / totalTasks) * 100) : 0}% completion rate
+                {totalTasks > 0 ? Math.round((stats.completed / totalTasks) * 100) : 0}% completion
               </p>
             </CardContent>
           </Card>
 
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardHeader className="flex justify-between pb-2">
               <CardTitle className="text-sm font-medium">Pending</CardTitle>
-              <div className="h-4 w-4 text-muted-foreground">
-                <Badge variant="warning" className="h-4 w-4 p-0">
-                  !
-                </Badge>
-              </div>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{stats.pending}</div>
-              <p className="text-xs text-muted-foreground">
-                Needs your attention
-              </p>
+              <p className="text-xs text-muted-foreground">Needs your attention</p>
             </CardContent>
           </Card>
         </div>
 
         {/* Main Content */}
         <Card>
-          <CardHeader>
-            <div className="lg:items-center lg:justify-between gap-4">
-              <CardTitle>Your Tasks</CardTitle>
-              {/* Desktop Filters */}
-              <div className="h-20 w-200 mt-5">
-                <SearchFilter
-                  searchTerm={searchTerm}
-                  onSearchChange={setSearchTerm}
-                  statusFilter={statusFilter}
-                  onStatusFilterChange={setStatusFilter}
-                />
-              </div>
-              
-              {/* Mobile Filter Trigger */}
-              <Button 
-                variant="outline" 
-                className="lg:hidden"
-                onClick={() => setMobileFiltersOpen(true)}
-              >
-                <Filter className="mr-2 h-4 w-4" />
-                Filters
-              </Button>
+          <CardHeader className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <CardTitle>Your Tasks</CardTitle>
+
+            {/* Desktop Filters */}
+            <div className="hidden lg:block w-full max-w-sm">
+              <SearchFilter
+                searchTerm={searchTerm}
+                onSearchChange={setSearchTerm}
+                statusFilter={statusFilter}
+                onStatusFilterChange={setStatusFilter}
+              />
             </div>
+
+            {/* Mobile Filter Trigger */}
+            <Button 
+              variant="outline" 
+              className="lg:hidden flex items-center gap-2"
+              onClick={() => setMobileFiltersOpen(true)}
+            >
+              <Filter className="h-4 w-4" /> Filters
+            </Button>
           </CardHeader>
 
           <CardContent>
-            {error && (
-              <Alert variant="destructive" className="mb-6">
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
-            )}
+            {error && <Alert variant="destructive" className="mb-6"><AlertDescription>{error}</AlertDescription></Alert>}
 
             {tasks.length === 0 ? (
               <div className="text-center py-12">
-                <div className="mx-auto h-24 w-24 text-muted-foreground/50 mb-4">
-                  <Search className="h-24 w-24" />
-                </div>
+                <Search className="mx-auto h-24 w-24 text-muted-foreground/50 mb-4" />
                 <h3 className="text-lg font-medium mb-2">No tasks found</h3>
                 <p className="text-muted-foreground mb-4">
-                  {searchTerm || statusFilter !== 'all' 
-                    ? 'Try adjusting your search or filter criteria'
-                    : 'Get started by creating your first task'
-                  }
+                  {searchTerm || statusFilter !== "all"
+                    ? "Try adjusting your search or filter criteria"
+                    : "Get started by creating your first task"}
                 </p>
-                {!searchTerm && statusFilter === 'all' && (
-                  <Button onClick={() => navigate("/tasks/new")}>
-                    <Plus className="mr-2 h-4 w-4" />
-                    Create Task
+                {!searchTerm && statusFilter === "all" && (
+                  <Button onClick={() => navigate("/tasks/new")} className="flex items-center gap-2">
+                    <Plus className="h-4 w-4" /> Create Task
                   </Button>
                 )}
               </div>
             ) : (
               <>
-              <TaskList 
-  tasks={tasks} 
-  onDelete={handleDelete}
-  onUpdate={handleTaskUpdate}
-  currentUserId={user?._id}  
-/>
-
-                
+                <TaskList 
+                  tasks={tasks} 
+                  onDelete={handleDelete}
+                  onUpdate={handleTaskUpdate}
+                  currentUserId={user?._id}  
+                />
                 {totalPages > 1 && (
                   <div className="mt-6">
                     <Pagination
