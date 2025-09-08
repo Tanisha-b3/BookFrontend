@@ -51,7 +51,7 @@ A full-stack Task Management Web Application built with **MERN** stack (MongoDB,
    ```bash
     git clone [YOUR_REPO_LINK]
    cd backend
-   ```
+   ---
   npm install
 Create a .env file in the backend root and add:
 
@@ -62,43 +62,34 @@ JWT_SECRET=your_jwt_secret_key
 PORT=5000
 Start the backend server:
 
-bash
+```bash
 Copy code
 npm run dev
 Frontend
+```
 Navigate to the frontend folder:
 
-bash
-Copy code
 cd frontend
 Install dependencies:
 
-bash
-Copy code
 npm install
 Create a .env file in the frontend root and add:
 
-bash
-Copy code
 REACT_APP_API_URL=http://localhost:5000/api
 Start the frontend development server:
 
 For React:
 
-bash
-Copy code
 npm start
 For Next.js:
 
-bash
-Copy code
 npm run dev
 Usage
 Register a new account or login with existing credentials.
 
 Create, view, update, or delete tasks from the dashboard.
 
-Use search and filter options to quickly find tasks.
+Use search and filter options to find tasks quickly.
 
 Pagination helps navigate large lists of tasks.
 
