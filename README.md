@@ -1,129 +1,235 @@
-# Task Management App
+# Car Wash Service 🚗💦
 
-A full-stack Task Management Web Application built with **MERN** stack (MongoDB, Express, React/Next.js, Node.js) allowing users to register, log in, and manage their own tasks efficiently.  
+A modern web application to manage, track, and book car wash appointments efficiently. Built with React, ShadCN UI components, and Axios for API requests.
 
----
+![Car Wash Service](https://img.shields.io/badge/React-18.2.0-blue) ![ShadCN-UI](https://img.shields.io/badge/ShadCN-UI-green) ![TailwindCSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC) ![License](https://img.shields.io/badge/License-MIT-green)
 
-## Features
+## ✨ Features
 
-- **Authentication**
-  - Sign Up and Login with email & password.
-  - Passwords are securely hashed using bcrypt.
-  - JWT-based authentication for protected routes.
-  - Users can only access their own tasks.
+### 📋 Booking Management
+- **View Bookings**: Responsive grid layout displaying all appointments
+- **Create Bookings**: Intuitive form to add new car wash appointments
+- **Edit Bookings**: Update existing booking details
+- **Delete Bookings**: Secure deletion with confirmation dialogs
 
-- **Task Management (CRUD)**
-  - Create, view, update, and delete tasks.
-  - Each task includes: title, description, status (Pending/Done), and createdAt.
-  - Only the task creator can modify or delete a task.
+### 🔍 Advanced Search & Filtering
+- **Real-time Search**: Instant search by customer name, car details, or service type
+- **Status Filtering**: Filter by booking status (Pending, Confirmed, Completed, Cancelled)
+- **Service Type Filter**: Filter by wash service type (Basic, Deluxe, Full Detailing)
+- **Smart Sorting**: Sort by date, customer name, price, or duration
 
-- **Search, Filter, and Pagination**
-  - Search tasks by title or description.
-  - Filter tasks by status: All, Pending, Done.
-  - Search and filter work together.
-  - Pagination implemented for task lists.
+### 🎨 User Experience
+- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile
+- **Loading States**: Elegant skeleton loaders while fetching data
+- **Pagination**: Efficient handling of large datasets
+- **Toast Notifications**: User-friendly feedback for actions
+- **Dark/Light Mode**: Ready for theme integration
 
-- **Frontend**
-  - Built with React / Next.js 13+ (App Router optional).
-  - Pages: Login/Register, Dashboard (task list), Task Form (create/edit).
-  - Clean and minimal UI using TailwindCSS / Shadcn UI.
-  - Loading and error states handled gracefully.
+### 📊 Dashboard Features
+- **Booking Statistics**: Overview cards showing total, confirmed, pending, and completed bookings
+- **Quick Actions**: Easy access to create new bookings and refresh data
+- **Status Badges**: Visual indicators for booking status
 
-- **Bonus / Optional Features**
-  - Deployed on Vercel with MongoDB Atlas backend.
-  - React Query / SWR for data fetching.
-  - Optimistic updates for task actions.
+## 🛠 Tech Stack
 
----
+**Frontend Framework:**
+- React 18.2.0
+- React Router DOM
 
-## Demo
+**UI Components:**
+- ShadCN/UI - Modern component library
+- TailwindCSS - Utility-first CSS framework
 
-- **Frontend:** [https://user-frontend-zoss.vercel.app](https://user-frontend-zoss.vercel.app)  
-- **Backend API:** [https://user-backend-eta.vercel.app](https://user-backend-eta.vercel.app)  
+**Icons & Assets:**
+- Lucide React - Beautiful icons
+- Custom SVG illustrations
 
----
+**API & State Management:**
+- Axios - HTTP client for API requests
+- React Hook Form - Form management and validation
 
-## Installation
+**User Experience:**
+- React Hot Toast - Notification system
+- Date-fns (optional) - Date formatting
 
-### Backend
+## 🚀 Quick Start
 
-1. Clone the repository:
+### Prerequisites
+- Node.js (v14 or higher)
+- npm or yarn
+- Backend API endpoint (update in `api/axios.js`)
+
+### Installation
+
+1. **Clone the repository**
    ```bash
-    git clone [YOUR_REPO_LINK]
-   cd backend
-   ---
-  npm install
-Create a .env file in the backend root and add:
-
-ini
-Copy code
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret_key
-PORT=5000
-Start the backend server:
-
-```bash
-Copy code
-npm run dev
-Frontend
+   git clone https://github.com/yourusername/car-wash-service.git
+   cd car-wash-service
+   ```
+Install dependencies
 ```
-Navigate to the frontend folder:
-
-cd frontend
-Install dependencies:
-
+bash
 npm install
-Create a .env file in the frontend root and add:
-
-REACT_APP_API_URL=http://localhost:5000/api
-Start the frontend development server:
-
-For React:
-
+Configure API endpoint
+```
+# Update src/api/axios.js with your backend URL
+const BASE_URL = "your-backend-api-url";
+Start the development server
+```
+bash
 npm start
-For Next.js:
-
-npm run dev
-Usage
-Register a new account or login with existing credentials.
-
-Create, view, update, or delete tasks from the dashboard.
-
-Use search and filter options to find tasks quickly.
-
-Pagination helps navigate large lists of tasks.
-
-Tech Stack
-Frontend: React / Next.js, TailwindCSS / Shadcn UI
-
-Backend: Node.js, Express
-
-Database: MongoDB
-
-Authentication: JWT, bcrypt
-
-Folder Structure
+Open your browser
+Navigate to http://localhost:3000
+```
+Build for Production
+```
+# Create production build
+bash
+npm run build
+```
+# Serve the build locally
+npm install -g serve
+serve -s build
+📁 Project Structure
 text
-Copy code
-backend/
-├── controllers/
-├── models/
-├── routes/
-├── middleware/
-├── server.js
-
-frontend/
-├── pages/
-├── components/
+src/
 ├── api/
-├── styles/
-├── App.jsx
-License
-This project is for evaluation purposes and does not include a license.
+│   └── axios.js              # Axios configuration and interceptors
+├── components/
+│   ├── ui/                   # ShadCN UI components
+│   ├── booking/
+│       ├── BookingCard.jsx   # Individual booking card component
+│       ├── BookingForm.jsx   # Create/Edit booking form
+│       └── BookingDetail.jsx # Booking details page
+│   
+│              
+├── pages/
+│   ├── Landing.jsx           # Welcome landing page
+│   ├── Home.jsx              # Main bookings dashboard
+│   ├── CreateBooking.jsx     # Create new booking page
+│   └── EditBooking.jsx       # Edit existing booking page
+├── hooks/
+│   └── useBookings.js        # Custom hook for bookings data
+├── utils/
+│   └── helpers.js            # Utility functions
+└── App.jsx                   # Main application component
+🎯 Usage Guide
+Viewing Bookings
+Navigate to the Home page
 
-Author
-Tanisha Borana
-Email: your_email@example.com
-GitHub: your_github_profile 
-   git clone [YOUR_REPO_LINK]
-   cd backend
+Browse bookings in the responsive grid
+
+Use the search to find specific bookings
+
+Apply filters to narrow down results
+
+Click "View Details" for more information
+
+# Creating a Booking
+Click the "New Booking" button
+
+Fill in customer details (name, phone, email)
+
+Enter vehicle information (make, model, type)
+
+Select service type and preferred date/time
+
+Submit the form to create the booking
+
+# Managing Bookings
+Edit: Click the edit button on any booking card
+
+Delete: Use the delete button with a confirmation dialog
+
+Update Status: Change booking status from the edit form
+
+# Search & Filters
+Search: Type in the search bar for real-time results
+
+Status Filter: Filter by booking status using the dropdown
+
+Service Filter: Filter by service type
+
+Sorting: Change sort order for better organization
+
+# 🔧 API Integration
+The application expects a RESTful API with the following endpoints:
+
+# javascript
+// Base URL: /api/bookings
+
+GET    /              # Get all bookings (with pagination)
+GET    /:id           # Get single booking
+POST   /              # Create new booking
+PUT    /:id           # Update booking
+DELETE /:id           # Delete booking
+GET    /search?q=     # Search bookings
+Sample Booking Object
+json
+{
+  "customerName": "John Doe",
+  "customerPhone": "+1234567890",
+  "customerEmail": "john@example.com",
+  "carDetails": {
+    "make": "Toyota",
+    "model": "Camry",
+    "type": "sedan"
+  },
+  "serviceType": "Deluxe Wash",
+  "date": "2024-01-15T10:00:00Z",
+  "duration": 60,
+  "price": 55,
+  "status": "Confirmed",
+  "notes": "Special interior cleaning requested"
+}
+# 🎨 Customization
+Styling
+Modify TailwindCSS classes in components
+
+Update color scheme in tailwind.config.js
+
+Customize ShadCN components as needed
+
+# Common Issues
+API Connection Failed
+
+Check that the backend server is running
+
+Verify API URL in axios.js
+
+Check CORS settings on backend
+
+Build Errors
+
+Clear node_modules and reinstall dependencies
+
+Check Node.js version compatibility
+
+Verify all environment variables
+
+Styling Issues
+
+Ensure TailwindCSS is properly configured
+
+Check class names for typos
+
+Verify ShadCN components are installed correctly
+
+# 📄 License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+#  Acknowledgments
+ShadCN/UI for the beautiful component library
+
+TailwindCSS for the utility-first CSS framework
+
+Lucide for the elegant icons
+The 
+React community for excellent documentation and support
+
+Troubleshooting guide
+
+Professional footer with social links
+
+You can customize the repository URLs, contact information, and add any specific deployment instructions based on your hosting platform.
+
