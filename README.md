@@ -114,36 +114,18 @@ Service Filter: Filter by service type
 
 Sorting: Change sort order for better organization
 
-# 🔧 API Integration
+#  API Integration
 The application expects a RESTful API with the following endpoints:
 
 # javascript
-// Base URL: /api/bookings
+Base URL: /api/bookings
 
-### GET    /              # Get all bookings (with pagination)
-### GET    /:id           # Get single booking
-### POST   /              # Create new booking
-### PUT    /:id           # Update booking
-### DELETE /:id           # Delete booking
-### GET    /search?q=     # Search bookings
-### Sample Booking Object
-json
-{
-  "customerName": "John Doe",
-  "customerPhone": "+1234567890",
-  "customerEmail": "john@example.com",
-  "carDetails": {
-    "make": "Toyota",
-    "model": "Camry",
-    "type": "sedan"
-  },
-  "serviceType": "Deluxe Wash",
-  "date": "2024-01-15T10:00:00Z",
-  "duration": 60,
-  "price": 55,
-  "status": "Confirmed",
-  "notes": "Special interior cleaning requested"
-}
+ GET    /              # Get all bookings (with pagination)
+GET    /:id           # Get single booking
+POST   /              # Create new booking
+PUT    /:id           # Update booking
+DELETE /:id           # Delete booking
+GET    /search?q=     # Search bookings
 # 🎨 Customization
 Styling
 Modify TailwindCSS classes in components
