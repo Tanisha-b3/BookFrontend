@@ -120,13 +120,13 @@ The application expects a RESTful API with the following endpoints:
 # javascript
 // Base URL: /api/bookings
 
-GET    /              # Get all bookings (with pagination)
-GET    /:id           # Get single booking
-POST   /              # Create new booking
-PUT    /:id           # Update booking
-DELETE /:id           # Delete booking
-GET    /search?q=     # Search bookings
-Sample Booking Object
+### GET    /              # Get all bookings (with pagination)
+### GET    /:id           # Get single booking
+### POST   /              # Create new booking
+### PUT    /:id           # Update booking
+### DELETE /:id           # Delete booking
+### GET    /search?q=     # Search bookings
+### Sample Booking Object
 json
 {
   "customerName": "John Doe",
