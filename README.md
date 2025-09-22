@@ -90,7 +90,8 @@ npm run build
 # Serve the build locally
 npm install -g serve
 serve -s build
-📁 Project Structure
+
+# 📁 Project Structure
 text
 src/
 ├── api/
