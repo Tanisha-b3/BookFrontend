@@ -87,45 +87,6 @@ Build for Production
 bash
 npm run build
 ```
-# Serve the build locally
-npm install -g serve
-serve -s build
-
-# 📁 Project Structure
-text
-src/
-├── api/
-│   └── axios.js              # Axios configuration and interceptors
-├── components/
-│   ├── ui/                   # ShadCN UI components
-│   ├── booking/
-│       ├── BookingCard.jsx   # Individual booking card component
-│       ├── BookingForm.jsx   # Create/Edit booking form
-│       └── BookingDetail.jsx # Booking details page
-│   
-│              
-├── pages/
-│   ├── Landing.jsx           # Welcome landing page
-│   ├── Home.jsx              # Main bookings dashboard
-│   ├── CreateBooking.jsx     # Create new booking page
-│   └── EditBooking.jsx       # Edit existing booking page
-├── hooks/
-│   └── useBookings.js        # Custom hook for bookings data
-├── utils/
-│   └── helpers.js            # Utility functions
-└── App.jsx                   # Main application component
-🎯 Usage Guide
-Viewing Bookings
-Navigate to the Home page
-
-Browse bookings in the responsive grid
-
-Use the search to find specific bookings
-
-Apply filters to narrow down results
-
-Click "View Details" for more information
-
 # Creating a Booking
 Click the "New Booking" button
 
